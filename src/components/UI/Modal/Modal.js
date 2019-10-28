@@ -14,7 +14,10 @@ class Modal extends Component {
         //we need to check its show property
         // so basically in this case:
         // currently show is FALSE and next show is true
-        return nextProps.show !== this.props.show
+        return nextProps.show !== this.props.show ||
+            // if we change order summary to spinner while sending data to server
+            // we should check it as well
+            nextProps.children !== this.props.children
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
