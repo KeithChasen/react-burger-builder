@@ -1,0 +1,1 @@
+export const baseURL = 'https://firebase-project-url'
