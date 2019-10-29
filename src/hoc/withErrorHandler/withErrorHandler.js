@@ -9,7 +9,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
             error: null
         }
 
-        componentDidMount() {
+        //legacy. must be replaced with componentDidMount
+        componentWillMount() {
             axios
                 .interceptors
                 .request
