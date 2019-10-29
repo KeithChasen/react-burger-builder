@@ -11,7 +11,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         //legacy. must be replaced with componentDidMount
         componentWillMount() {
-            axios
+            this.reqInterceptor = axios
                 .interceptors
                 .request
                 .use(req => {
@@ -21,7 +21,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     return req
                 })
 
-            axios
+            this.resInterceptor = axios
                 .interceptors
                 .response
                 .use(res => res, error => {
@@ -29,6 +29,11 @@ const withErrorHandler = (WrappedComponent, axios) => {
                         error: error
                     })
                 })
+        }
+
+        componentWillUnmount() {
+            axios.interceptors.request.eject(this.reqInterceptor)
+            axios.interceptors.request.eject(this.resInterceptor)
         }
 
         errorConfirmedHandler = () => {
