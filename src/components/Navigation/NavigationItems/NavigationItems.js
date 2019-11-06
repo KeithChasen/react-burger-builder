@@ -6,8 +6,8 @@ import NavigationItem from './NavigationItem/NavigationItem'
 const navigationItems = props => (
     <ul className={classes.NavigationItems}>
         {/*active - such syntax works for boolean*/}
-        <NavigationItem link='/' active>Burger Builder</NavigationItem>
-        <NavigationItem link='/'>Checkout</NavigationItem>
+        <NavigationItem link='/' exact>Burger Builder</NavigationItem>
+        <NavigationItem link='/orders'>Orders</NavigationItem>
     </ul>
 )
 
