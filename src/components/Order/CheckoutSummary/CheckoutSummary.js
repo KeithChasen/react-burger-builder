@@ -7,7 +7,7 @@ import classes from './CheckoutSummary.module.css'
 const checkoutSummary = props => {
     return (
         <div className={classes.CheckoutSummary}>
-            <h1>The Burger</h1>
+            <h1>The Burger you've made</h1>
             <div style={{
                 width: '100%',
                 margin: 'auto'
@@ -16,13 +16,13 @@ const checkoutSummary = props => {
             </div>
             <Button
                 btnType="Danger"
-                clicked
+                clicked={props.checkoutCancelled}
             >
                 Cancel
             </Button>
             <Button
                 btnType="Success"
-                clicked
+                clicked={props.checkoutContinued}
             >
                 Continue
             </Button>
