@@ -7,6 +7,7 @@ const input = props => {
     switch (props.elementType) {
         case ('input'):
             inputElement = <input
+                onChange={props.changed}
                 className={classes.InputElement}
                 {...props.elementConfig}
                 value={props.value}
@@ -14,6 +15,7 @@ const input = props => {
             break
         case ('textarea'):
             inputElement = <textarea
+                onChange={props.changed}
                 className={classes.InputElement}
                 {...props.elementConfig}
                 value={props.value}
@@ -21,6 +23,7 @@ const input = props => {
             break
         case ('select'):
             inputElement = <select
+                onChange={props.changed}
                 className={classes.InputElement}
                 value={props.value}
             >
@@ -32,7 +35,12 @@ const input = props => {
             </select>
             break
         default:
-            inputElement = <input className={classes.InputElement} {...props.elementConfig} value={props.value} />
+            inputElement = <input
+                onChange={props.changed}
+                className={classes.InputElement}
+                {...props.elementConfig}
+                value={props.value}
+            />
     }
 
     return (
