@@ -18,7 +18,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             city: {
                 elementType: 'input',
@@ -30,7 +31,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             country: {
                 elementType: 'input',
@@ -42,7 +44,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             zipCode: {
                 elementType: 'input',
@@ -56,7 +59,8 @@ class ContactData extends Component {
                     maxLength: 5,
                     minLength: 5,
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -68,7 +72,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -156,6 +161,8 @@ class ContactData extends Component {
             updatedFormElement.validation
         )
 
+        updatedFormElement.touched = true
+
         updatedOrderForm[inputIdentifier] = updatedFormElement
 
         console.log(updatedFormElement)
@@ -183,6 +190,9 @@ class ContactData extends Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
+                        shouldValidate={formElement.config.validation}
+                        touched={formElement.config.touched}
+                        invalid={!formElement.config.valid}
                         changed={(event) => this.inputChanged(event, formElement.id)}
                     />
                 )) }
