@@ -14,7 +14,6 @@ import axios from '../../axios-orders'
 
 class BurgerBuilder extends Component {
     state = {
-        purchasable: false,
         purchasing: false,
         loading: false,
         error: false
@@ -44,9 +43,7 @@ class BurgerBuilder extends Component {
                 return sum + el
             }, 0)
 
-        this.setState({
-            purchasable: sum > 0
-        })
+        return sum > 0
     }
 
     purchaseHandler = () => {
@@ -103,7 +100,10 @@ class BurgerBuilder extends Component {
                         ingredientAdded={this.props.onIngredientAdded}
                         ingredientRemoved={this.props.onIngredientRemove}
                         disabled={disableInfo}
-                        purchasable={this.state.purchasable}
+                        //one way of figuring out is burger purchasable:
+                        // using () brace for function beacuse we DO want
+                        // this function to be fired every time content is re-rendered
+                        purchasable={this.updatePurchaseState(this.props.ings)}
                         price={this.props.tPrice}
                         ordered={this.purchaseHandler}
                     />
