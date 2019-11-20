@@ -111,23 +111,6 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         }
-
-        // using firebase, so need to fire <path>.json
-        axios.post('/orders.json', order)
-            .then(response => {
-                console.log(response)
-                this.setState({
-                    loading: false
-                })
-
-                this.props.history.push('/')
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({
-                    loading: false
-                })
-            });
     }
 
     checkValidity(value, rules) {
