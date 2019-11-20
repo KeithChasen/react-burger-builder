@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addIngredient, removeIngredient } from "../../store/actions/index";
+import {addIngredient, initIngredients, removeIngredient} from "../../store/actions/index";
 
 import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
@@ -14,24 +14,12 @@ import axios from '../../axios-orders'
 
 class BurgerBuilder extends Component {
     state = {
-        purchasing: false,
-        loading: false,
-        error: false
+        purchasing: false
     }
 
     componentDidMount() {
         console.log(this.props)
-        // axios.get('/ingredients.json')
-        //     .then(response => {
-        //         this.setState({
-        //             ingredients: response.data
-        //         })
-        //     })
-        //     .catch(error => {
-        //         this.setState({
-        //             error: true
-        //         })
-        //     })
+        this.props.onInitIngredients()
     }
 
     updatePurchaseState (ingredients) {
@@ -73,7 +61,7 @@ class BurgerBuilder extends Component {
 
         let orderSummary = null
 
-        let burger = this.state.error ?
+        let burger = this.props.err ?
             <p>Ingredients can't be fetched</p> :
             <Spinner />
 
@@ -102,10 +90,6 @@ class BurgerBuilder extends Component {
             />
         }
 
-        if (this.state.loading) {
-            orderSummary = <Spinner/>
-        }
-
         return (
             <Aux>
                 <Modal
@@ -123,7 +107,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        tPrice: state.totalPrice
+        tPrice: state.totalPrice,
+        err: state.error
     }
 }
 
@@ -131,6 +116,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(addIngredient(ingName)),
         onIngredientRemove: (ingName) => dispatch(removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(initIngredients())
     }
 }
 
