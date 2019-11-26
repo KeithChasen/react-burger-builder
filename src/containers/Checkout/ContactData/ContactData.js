@@ -5,6 +5,8 @@ import Input from '../../../components/UI/Input/Input'
 import classes from './ContactData.module.css'
 import axios from '../../../axios-orders'
 import { connect } from 'react-redux'
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
+import * as actions from '../../../store/actions/index'
 
 class ContactData extends Component {
     state = {
@@ -89,16 +91,11 @@ class ContactData extends Component {
                 validation: {}
             },
         },
-        loading: false,
         formIsValid: false
     }
 
     orderHandler = (event) => {
         event.preventDefault()
-
-        this.setState({
-            loading: true
-        })
 
         const formData = {}
 
@@ -111,6 +108,8 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         }
+
+        this.props.onOrderBurger(order)
     }
 
     checkValidity(value, rules) {
@@ -130,6 +129,16 @@ class ContactData extends Component {
 
         if (rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/
+            isValid = pattern.test(value) && isValid
         }
 
         return isValid
@@ -194,7 +203,7 @@ class ContactData extends Component {
                 <Button btnType="Success" disabled={!this.state.formIsValid}>Order</Button>
             </form>
         )
-        if (this.state.loading) {
+        if (this.props.ldng) {
             form = <Spinner/>
         }
         return (
@@ -209,8 +218,15 @@ class ContactData extends Component {
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        ldng: state.loading
     }
 }
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios))
