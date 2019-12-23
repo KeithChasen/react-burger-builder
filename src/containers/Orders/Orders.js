@@ -11,13 +11,13 @@ import { connect } from 'react-redux'
 
 class Orders extends Component {
      componentDidMount() {
-        this.props.onFetchOrders()
+        this.props.onFetchOrders(this.props.tkn)
     }
 
     render() {
         let orders = <Spinner/>
 
-        if (!this.props.loading) {
+        if (!this.props.ldng) {
             orders = this.props.ords.map(
                 order =>
                     <li key={order.id}>
@@ -36,13 +36,19 @@ class Orders extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () => dispatch(actions.fetchOrders())
+        onFetchOrders: (token) => dispatch(actions.fetchOrders(token))
     }
 }
 
 const mapStateToProps = state => {
     return {
-        ords: state.order.orders
+        ords: state.order.orders,
+        ldng: state.order.loading,
+        tkn: state.auth.token
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios))
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withErrorHandler(Orders, axios))
