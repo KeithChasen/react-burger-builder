@@ -34,7 +34,6 @@ export const auth = (email, password, isSignUp) => {
         let url = isSignUp ? signUpURL : signInURL + apiKey
         axios.post(url, authData)
             .then(response => {
-                console.log(response)
                 dispatch(
                     authSuccess(
                         response.data.idToken,
@@ -43,8 +42,9 @@ export const auth = (email, password, isSignUp) => {
                 )
             })
             .catch(error => {
-                console.log(error)
-                dispatch(authFail(error))
+                //todo: add a mapping for Firebase to APP error mapping
+                // probably using the .code or .status field not the .error
+                dispatch(authFail(error.response.data.error))
             })
     }
 }
