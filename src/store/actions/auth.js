@@ -1,4 +1,6 @@
 import * as actionTypes from './actionTypes'
+import axios from 'axios'
+import { authURL, apiKey } from '../../config'
 
 export const authStart = () => {
     return {
@@ -22,6 +24,20 @@ export const authFail = (error) => {
 
 export const auth = (email, password) => {
     return dispatch => {
-        dispatch(authStart(email, password))
+        dispatch(authStart())
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post(authURL + apiKey, authData)
+            .then(response => {
+                console.log(response)
+                dispatch(authSuccess(response.data))
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(authFail(error))
+            })
     }
 }
