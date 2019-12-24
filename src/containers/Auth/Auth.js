@@ -5,6 +5,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import classes from './Auth.module.css'
 import * as actions from '../../store/actions/index'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 class Auth extends Component {
     state = {
@@ -141,8 +142,14 @@ class Auth extends Component {
             <p>{ this.props.err.message }</p> :
             null
 
+        let authRedirect = null
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to='/'/>
+        }
+
         return (
             <div className={classes.Auth}>
+                { authRedirect }
                 { errorMessage }
                 { form }
                 <Button
@@ -159,7 +166,8 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         ldng: state.auth.loading,
-        err: state.auth.error
+        err: state.auth.error,
+        isAuthenticated: state.auth.token
     }
 }
 
