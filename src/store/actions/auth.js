@@ -50,7 +50,7 @@ export const auth = (email, password, isSignUp) => {
             password: password,
             returnSecureToken: true
         }
-        let url = isSignUp ? signUpURL : signInURL + apiKey
+        let url = (isSignUp ? signUpURL : signInURL) + apiKey
         axios.post(url, authData)
             .then(response => {
 
