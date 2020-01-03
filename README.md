@@ -29,3 +29,20 @@ In the project directory, you can run:
 - that command will create the "build" folder in the root
 #### `npm run build` 
 
+- If we're about to use firebase hosting let's install its tools
+#### `npm install -g firebase-tools` 
+
+- login to your google account
+#### `firebase login`
+
+- init firebase project
+#### `firebase init`
+
+- Select Hosting option by pressing space
+- select existing project
+- type "build" for public directory
+- type "y" for configure as a single-page app
+- overwrite build/index.html? - NO
+
+#### `firebase deploy`
+That will return you a url of your app
