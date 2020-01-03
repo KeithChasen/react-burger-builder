@@ -23,3 +23,9 @@ In the project directory, you can run:
   }
 }
 ```
+
+# `Building project`
+
+- that command will create the "build" folder in the root
+#### `npm run build` 
+
