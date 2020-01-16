@@ -13,11 +13,11 @@ const asyncCheckout = asyncComponent(() => {
 })
 
 const asyncOrders = asyncComponent(() => {
-    return import('./containers/Auth/Auth')
+    return import('./containers/Orders/Orders')
 })
 
 const asyncAuth = asyncComponent(() => {
-    return import('./containers/Checkout/Checkout')
+    return import('./containers/Auth/Auth')
 })
 
 class App extends Component {
