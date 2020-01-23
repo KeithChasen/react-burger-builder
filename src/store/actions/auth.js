@@ -43,39 +43,11 @@ export const checkAuthTimeout = expirationTime => {
 }
 
 export const auth = (email, password, isSignUp) => {
-    return dispatch => {
-        dispatch(authStart())
-        const authData = {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        }
-        let url = (isSignUp ? signUpURL : signInURL) + apiKey
-        axios.post(url, authData)
-            .then(response => {
-
-                const expirationDate =
-                    new Date(
-                    new Date().getTime() + response.data.expiresIn * 1000
-                )
-
-                localStorage.setItem('token', response.data.idToken)
-                localStorage.setItem('expirationDate', expirationDate)
-                localStorage.setItem('userId', response.data.localId)
-
-                dispatch(
-                    authSuccess(
-                        response.data.idToken,
-                        response.data.localId
-                    )
-                )
-                dispatch(checkAuthTimeout(response.data.expiresIn))
-            })
-            .catch(error => {
-                //todo: add a mapping for Firebase to APP error mapping
-                // probably using the .code or .status field not the .error
-                dispatch(authFail(error.response.data.error))
-            })
+    return {
+        type: actionTypes.AUTH_USER,
+        email,
+        password,
+        isSignUp
     }
 }
 
