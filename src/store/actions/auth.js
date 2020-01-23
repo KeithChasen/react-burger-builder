@@ -1,6 +1,4 @@
 import * as actionTypes from './actionTypes'
-import axios from 'axios'
-import { signInURL, signUpURL, apiKey } from '../../config'
 
 export const authStart = () => {
     return {
